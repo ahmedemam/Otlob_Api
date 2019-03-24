@@ -3,32 +3,35 @@ module API
   module V1
     class Orders < Grape::API
       version 'v1', using: :path, vendor: 'otlob'
-      resources :orders do
-
+      resources(:orders) do
+        # function
         # get: /orders - return all orders
-        desc 'Get All Orders'
+        desc 'GetAllOrders'
         get do
-          Orders.all.ordered
+          Order.each
         end
 
+        # function
         # get; /orders/:id - specific order
-        desc 'Delete One Order'
+        desc 'GetOneOrder'
         params do
           requires :id
         end
         get ':id' do
-          Order.find(params[:id])
+          Order.find_by(params[:id])
         end
 
+        # function
         # get; /orders/owner/:id - return user's order
         desc 'get all orders for specific user'
         params do
           requires :id
         end
         get 'owner/:id' do
-          Order.find(owner: params[:id])
+          Order.find_by(owner: params[:id])
         end
 
+        # function
         # post: /orders - add new order
         desc 'Add New Order'
         params do
@@ -44,29 +47,31 @@ module API
           requires :groups, type: Array
         end
         post do
+          O
           Order.create(
-              owner: params[:owner],
-              name: params[:name],
-              restaurantName: params[:restaurantName],
-              date: params[:date],
-              menuImage: params[:menuImage],
-              status: params[:status],
-              totalPrice: params[:totalPrice],
-              items: params[:items],
-              friends: params[:friends],
-              groups: params[:groups]
+            owner: params[:owner],
+            name: params[:name],
+            restaurantName: params[:restaurantName],
+            date: params[:date],
+            menuImage: params[:menuImage],
+            status: params[:status],
+            totalPrice: params[:totalPrice],
+            items: params[:items],
+            friends: params[:friends],
+            groups: params[:groups]
           )
         end
-
+        # function
         # delete: /orders/:id - delete order
         desc 'Delete One Order'
         params do
           requires :id
         end
         delete ':id' do
-          Order.find(params[:id]).destroy
+          Order.find_by(params[:id]).destroy
         end
 
+        # function
         # update: /orders/:id
         desc 'Update One Order'
         params do
@@ -83,8 +88,8 @@ module API
           requires :groups, type: Array
         end
         put ':id' do
-          order = Order.find(params[:id])
-          order.update(
+          if Order.find_by(params[:id])
+            Order.update(
               owner: params[:owner],
               name: params[:name],
               restaurantName: params[:restaurantName],
@@ -95,7 +100,10 @@ module API
               items: params[:items],
               friends: params[:friends],
               groups: params[:groups]
-          )
+            )
+          else
+            { status: 'order not found' }
+          end
         end
       end
     end
@@ -112,7 +120,6 @@ end
 # @items
 # @friends
 # @groups
-
 
 # get:    /orders
 # get     /orders/:id
