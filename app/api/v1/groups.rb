@@ -58,7 +58,7 @@ module API
               requires :group_id, type: String
 
             end
-            post do
+            post ':group_id' do
               user = User.find(params[:user_id])
             group = user.groups.find(params[:group_id])
             group.friends.create!(friend_id:params[:friend_id]);

@@ -1,0 +1,14 @@
+MONGODB | EVENT: #<TopologyOpening topology=Unknown[]>
+MONGODB | Topology type 'unknown' initializing.
+MONGODB | EVENT: #<TopologyChanged prev=Unknown[] new=Unknown[localhost:27017]>
+MONGODB | Topology type 'Unknown' changed to type 'Unknown'.
+MONGODB | EVENT: #<ServerOpening address=localhost:27017 topology=Unknown[localhost:27017]>
+MONGODB | Server localhost:27017 initializing.
+MONGODB | EVENT: #<ServerDescriptionChanged address=localhost:27017 topology=Single[localhost:27017] prev=#<Mongo::Server:Description:0x29487420 config={} average_round_trip_time=> new=#<Mongo::Server:Description:0x29499580 config={"ismaster"=>true, "maxBsonObjectSize"=>16777216, "maxMessageSizeBytes"=>48000000, "maxWriteBatchSize"=>100000, "localTime"=>2019-03-24 09:01:54 UTC, "logicalSessionTimeoutMinutes"=>30, "minWireVersion"=>0, "maxWireVersion"=>7, "readOnly"=>false, "ok"=>1.0} average_round_trip_time=0.088922794>>
+MONGODB | Server description for localhost:27017 changed from 'unknown' to 'standalone'.
+MONGODB | EVENT: #<TopologyChanged prev=Unknown[localhost:27017] new=Single[localhost:27017]>
+MONGODB | Topology type 'Unknown' changed to type 'Single'.
+MONGODB | localhost:27017 | otlob_api_test.listCollections | STARTED | {"listCollections"=>1, "cursor"=>{}, "nameOnly"=>true, "filter"=>{"name"=>{"$not"=>/system\.|\$/}}, "lsid"=>{"id"=><BSON::Binary:0x29521200 type=uuid data=0x8140a550243548fc...>}}
+MONGODB | localhost:27017 | otlob_api_test.listCollections | SUCCEEDED | 0.020s
+MONGODB | localhost:27017 | admin.endSessions | STARTED | {"endSessions"=>[{"id"=><BSON::Binary:0x29521200 type=uuid data=0x8140a550243548fc...>}]}
+MONGODB | localhost:27017 | admin.endSessions | SUCCEEDED | 0.000s
