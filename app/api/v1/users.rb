@@ -10,6 +10,23 @@ module API
           get do
             User.all.ordered
           end
+
+           desc 'Create a user.'
+          params do
+            requires :name, type: String
+            requires :email, type: String
+            requires :password, type: String
+            requires :image, type: String
+          end
+          post do
+           
+            User.create!({
+              author: params[:name],
+              email: params[:email],
+              website: params[:password],
+              content: params[:image]
+            })
+          end
   
           desc "Return a specific User"
           params do
