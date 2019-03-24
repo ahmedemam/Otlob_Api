@@ -14,7 +14,7 @@ module API
         # get; /orders/:id - specific order
         desc 'Delete One Order'
         params do
-          requries :id
+          requires :id
         end
         get ':id' do
           Order.find(params[:id])
@@ -61,7 +61,7 @@ module API
         # delete: /orders/:id - delete order
         desc 'Delete One Order'
         params do
-          requries :id
+          requires :id
         end
         delete ':id' do
           Order.find(params[:id]).destroy
