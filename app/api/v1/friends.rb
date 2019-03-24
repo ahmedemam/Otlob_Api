@@ -7,14 +7,14 @@ module API
         # Nested resource so we need to add the post namespace
         namespace 'friends/:friend_id' do
           resources :friends do
-  
+
             desc 'Create a friend.'
             params do
               requires :user_id, type: String
               requires :friends_id, type: Array
           
             end
-            user do
+            User do
               user = User.find(params[:user_id])
               user.Friends.create!({
                 user_id: params[:user_id],
@@ -22,9 +22,7 @@ module API
                 
               })
             end
-  
-       
-  
+
             desc 'Delete a Friend.'
             params do
               requires :id, type: String, desc: 'Status ID.'
