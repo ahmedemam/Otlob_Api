@@ -13,8 +13,9 @@ class Friend
     
     # tags and comments will be stored inside the
     # Post document
-    embedded_in :user_id,class_name:"User"
-    embeds_many :friends_id,class_name:"User"
+    
+    embeds_many :users
+    # embedded_in :user
 
   
     # Sort the posts
