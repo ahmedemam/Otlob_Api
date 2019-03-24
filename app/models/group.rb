@@ -3,8 +3,9 @@ class Group
     include Mongoid::Document
     include Mongoid::Timestamps
     field :name, type: String
-    embeds_many :users, class_name: "User", store_as: "members"
-    embeds_one :users , class_name: "User", store_as: "owner"
+    #  field :members, type: Array
+   
+     embedded_in :user
     # Sort the posts
     scope :ordered, -> { order('created_at DESC') }
     # Validates that the slug is present and unique

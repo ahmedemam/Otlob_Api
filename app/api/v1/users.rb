@@ -18,6 +18,9 @@ module API
           get ':id' do
             User.find(params[:id])
           end
+
+  
+
           ##########################          
           desc "Login"
           params do
@@ -34,6 +37,7 @@ module API
             end
           end
           ##########################
+
           desc "Register"
           params do
             requires :email, type: String
