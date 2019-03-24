@@ -5,7 +5,7 @@ module API
         version 'v1', using: :path, vendor: 'samurails-blog'
   
         # Nested resource so we need to add the post namespace
-        namespace 'friends/:friend_id' do
+        namespace 'users/:user_id' do
           resources :friends do
   
             desc 'Create a friend.'
@@ -14,7 +14,7 @@ module API
               requires :friends_id, type: Array
           
             end
-            user do
+            post do
               user = User.find(params[:user_id])
               user.Friends.create!({
                 user_id: params[:user_id],

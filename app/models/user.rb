@@ -18,10 +18,8 @@ class User
     validates :email, presence: true, uniqueness: true
     validates :password, presence: true
     validates :name, presence: true
-<<<<<<< HEAD
     # The slug has to be unique since it can be used to query post.
     # Also defining an index will make the query more efficient
     
-=======
->>>>>>> 5b60c31d82b0486f6057ed4ee46d27eae214e029
+
   end
