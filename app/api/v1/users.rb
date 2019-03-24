@@ -42,22 +42,21 @@ module API
             requires :password, type: String
           end
 
-          post do
+           post do
             begin
               user = User.find_by(email:params[:email])
-            rescue ActiveRecord::RecordNotFound => e
-              { status: 'error' }
-            end
-            
-     
-              User.create!({
+              { status: 'Already Exist' }
+            rescue Exception => e
+                User.create!({
                 name: params[:name],
                 email: params[:email],
                 password: params[:password],
                 
               })
-           
-              
+
+             
+            end
+            
           end
           # post do
           #   user = User.find(params[:email])
