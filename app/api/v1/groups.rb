@@ -6,19 +6,22 @@ module API
   
         # Nested resource so we need to add the post namespace
         namespace 'users/:user_id' do
-          resources :friends do
+          resources :groups do
   
-            desc 'Create a friend.'
+            desc 'Create a group.'
             params do
               requires :user_id, type: String
-              requires :friends_id, type: Array
+              requires :users_id, type: Array
+              requires :name, type: String
+
           
             end
             post do
               user = User.find(params[:user_id])
-              user.Friends.create!({
-                user_id: params[:user_id],
-               friends_id: params[:friends_id],
+              user.Groups.create!({
+                owner: params[:user_id],
+               members: params[:users_id],
+               name:params[:name]
                 
               })
             end
