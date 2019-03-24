@@ -11,9 +11,28 @@ module API
           Orders.all.ordered
         end
 
+        # get; /orders/:id - specific order
+        desc 'Delete One Order'
+        params do
+          requries :id
+        end
+        get ':id' do
+          Order.find(params[:id])
+        end
+
+        # get; /orders/owner/:id - return user's order
+        desc 'get all orders for specific user'
+        params do
+          requries :id
+        end
+        get 'owner/:id' do
+          Order.find(owner: params[:id])
+        end
+
         # post: /orders - add new order
         desc 'Add New Order'
         params do
+          requires :owner
           requires :name, type: String
           requires :date, type: DateTime
           requires :restaurantName, type: String
@@ -26,6 +45,7 @@ module API
         end
         post do
           Order.create(
+              owner: params[:owner],
               name: params[:name],
               restaurantName: params[:restaurantName],
               date: params[:date],
@@ -51,6 +71,7 @@ module API
         desc 'Update One Order'
         params do
           requires :id
+          requires :owner
           requires :name, type: String
           requires :date, type: DateTime
           requires :restaurantName, type: String
@@ -64,6 +85,7 @@ module API
         put ':id' do
           order = Order.find(params[:id])
           order.update(
+              owner: params[:owner],
               name: params[:name],
               restaurantName: params[:restaurantName],
               date: params[:date],
@@ -93,9 +115,8 @@ end
 
 
 # get:    /orders
-# get     /orders/:id  --
+# get     /orders/:id
 # post:   /orders
 # delete: /orders/:id
 # put:    /orders/:id
-# get:    /orders/user/:id/latest
-#
+# get:    /orders/owner/:id
