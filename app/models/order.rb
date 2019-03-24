@@ -12,6 +12,7 @@ class Order
   field :items, type: Array
   embeds_many :friends, class_name: "Friend", store_as: "friends"
   embeds_many :groups, class_name: "Groups", store_as: "groups"
+  embedded_in :users, class_name: "Users", store_as: 'owner'
   # validation
   validates :name, presence: true
   validates :restaurantName, presence: true

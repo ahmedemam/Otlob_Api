@@ -1,15 +1,14 @@
-# app/api/v1/posts.rb
+# app/api/v1/users.rb
 module API
     module V1
       class Users < Grape::API
         version 'v1', using: :path, vendor: 'otlob'
-  
         resources :users do
-  
           desc 'Returns all users'
           get do
             User.all.ordered
           end
+
 
            desc 'Create a user.'
           params do
@@ -35,7 +34,6 @@ module API
           get ':id' do
             User.find(params[:id])
           end
-  
         end
       end
     end
