@@ -3,7 +3,7 @@ module API
   module V1
     class Orders < Grape::API
       version 'v1', using: :path, vendor: 'otlob'
-      namespace(:orders, :groups, :friends, :users) do
+      namespace(:orders) {
         resources(:orders, :users, :friends, :groups) do
           # [done]
           # get: /orders      - return all orders
@@ -23,12 +23,12 @@ module API
           end
 
           # function
-          # post:   /users/:id/orders/      - User's Orders
-          desc 'get all orders for specific user'
+          # get:   /orders/owner/:id      - User's Orders
+          desc 'Users Orders'
           params do
             requires :id
           end
-          get 'owner/:id' do
+          get '/owner/:id' do
             Order.find_by(owner: params[:id])
           end
 
@@ -107,7 +107,7 @@ module API
             end
           end
         end
-      end
+      }
     end
   end
 end
