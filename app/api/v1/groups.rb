@@ -1,7 +1,7 @@
 # app/api/v1/comments.rb
 module API
     module V1
-      class Friends < Grape::API
+      class Groups < Grape::API
         version 'v1', using: :path, vendor: 'otlob'
   
         # Nested resource so we need to add the post namespace
