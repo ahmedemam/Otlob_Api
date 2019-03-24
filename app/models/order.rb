@@ -10,9 +10,9 @@ class Order
   field :date, type: DateTime, default: Time.now
   field :totalPrice, type: Integer, default: 0
   field :items, type: Array
-  embeds_many :friends, class_name: "Friend", store_as: "friends"
-  embeds_many :groups, class_name: "Groups", store_as: "groups"
-  embedded_in :users, class_name: "Users", store_as: 'owner'
+  embeds_many :friends, class_name: "Friend"
+  embeds_many :groups, class_name: "Groups"
+  embedded_in :users, class_name: "Users"
   # validation
   validates :name, presence: true
   validates :restaurantName, presence: true
