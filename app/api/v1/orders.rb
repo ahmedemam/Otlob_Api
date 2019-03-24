@@ -43,4 +43,4 @@ end
 # post:   /orders
 # delete: /orders/:id
 # put:    /orders/:id
-#
+# get:    /orders/:id/lastest
