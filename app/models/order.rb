@@ -9,6 +9,7 @@ class Order
   field :status, type: String
   field :date, type: DateTime, default: Time.now
   field :totalPrice, type: Integer, default: 0
+  #
   field :items, type: Array
   embeds_many :friends, class_name: "Friend"
   embeds_many :groups, class_name: "Groups"
