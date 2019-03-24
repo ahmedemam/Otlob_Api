@@ -2,7 +2,7 @@
 module API
   module V1
     class Orders < Grape::API
-      version 'v1', using: :path, vendor: 'samurails-blog'
+      version 'v1', using: :path, vendor: 'otlob'
       resources :orders do
 
         # get: /orders - return all orders
@@ -23,7 +23,7 @@ module API
         # get; /orders/owner/:id - return user's order
         desc 'get all orders for specific user'
         params do
-          requries :id
+          requires :id
         end
         get 'owner/:id' do
           Order.find(owner: params[:id])

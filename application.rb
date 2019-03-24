@@ -17,7 +17,8 @@ module API
     get :status do
       { status: 'ok' }
     end
-    
+     mount V1::Users
+    mount V1::Groups
   end
 end
 
