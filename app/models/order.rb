@@ -11,9 +11,9 @@ class Order
   field :totalPrice, type: Integer, default: 0
   #
   field :items, type: Array
-  embeds_many :friends, class_name: "Friend"
-  embeds_many :groups, class_name: "Groups"
-  embedded_in :users, class_name: "Users"
+  embeds_many :friends
+  embeds_many :groups 
+  embedded_in :user
   # validation
   validates :name, presence: true
   validates :restaurantName, presence: true

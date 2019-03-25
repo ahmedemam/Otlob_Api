@@ -1,116 +1,84 @@
-# # app/api/v1/users.rb
-# module API
-#   module V1
-#     class Orders < Grape::API
-#       version 'v1', using: :path, vendor: 'otlob'
-#       namespace(:orders) {
-#         resources(:orders, :users, :friends, :groups) do
-#           # [done]
-#           # get: /orders      - return all orders
-#           desc 'return - All Orders'
-#           get do
-#             Order.each
-#           end
+# app/api/v1/users.rb
+module API
+  module V1
+    class Orders < Grape::API
+      version 'v1', using: :path, vendor: 'otlob'
+     namespace 'users/:user_id' do
+        resources :orders  do
+          # [done]
+          # get: /orders      - return all orders
+         desc 'List orders.'
+  
+             get do
+              user = User.find(params[:user_id])
+              user.orders.all
+          end
 
-#           # [done]
-#           # get; /orders/:id - specific order
-#           desc 'return - One Orders'
-#           params do
-#             requires :id
-#           end
-#           get ':id' do
-#             Order.find_by(params[:id])
-#           end
+          desc 'Get one order'
+  
+             get ':id' do
+              user = User.find(params[:user_id])
+              user.orders.find(params[:id])
+          end
 
-#           # function
-#           # get:   /orders/owner/:id      - User's Orders
-#           desc 'Users Orders'
-#           params do
-#             requires :id
-#           end
-#           get '/owner/:id' do
-#             Order.find_by(owner: params[:id])
-#           end
 
-#           # function
-#           # post: /orders - add new order
-#           desc 'Add New Order'
-#           params do
-#             requires :owner
-#             requires :name, type: String
-#             requires :date, type: DateTime
-#             requires :restaurantName, type: String
-#             requires :menuImage, type: String
-#             requires :status, type: String
-#             requires :totalPrice, type: Integer
-#             # requires :items, type: Array
-#             # requires :friends, type: Array
-#             # requires :groups, type: Array
-#           end
-#           post do
-#             O
-#             Order.create(
-#                 owner: params[:owner],
-#                 name: params[:name],
-#                 restaurantName: params[:restaurantName],
-#                 date: params[:date],
-#                 menuImage: params[:menuImage],
-#                 status: params[:status],
-#                 totalPrice: params[:totalPrice]
-#             # items: params[:items],
-#             # friends: params[:friends],
-#             # groups: params[:groups]
-#             )
-#           end
-#           # function
-#           # delete: /orders/:id - delete order
-#           desc 'Delete One Order'
-#           params do
-#             requires :id
-#           end
-#           delete ':id' do
-#             Order.find_by(params[:id]).destroy
-#           end
+           desc 'Create Order.'
+            params do
+            
+              requires :name, type: String
+               requires :restaurantName, type: String
+               requires :menuImage, type: String
+               requires :status, type: String
 
-#           # function
-#           # update: /orders/:id
-#           desc 'Update One Order'
-#           params do
-#             requires :id
-#             requires :owner
-#             requires :name, type: String
-#             requires :date, type: DateTime
-#             requires :restaurantName, type: String
-#             requires :menuImage, type: String
-#             requires :status, type: String
-#             requires :totalPrice, type: Integer
-#             # requires :items, type: Array
-#             # requires :friends, type: Array
-#             # requires :groups, type: Array
-#           end
-#           put ':id' do
-#             if Order.find_by(params[:id])
-#               Order.update(
-#                   owner: params[:owner],
-#                   name: params[:name],
-#                   restaurantName: params[:restaurantName],
-#                   date: params[:date],
-#                   menuImage: params[:menuImage],
-#                   status: params[:status],
-#                   totalPrice: params[:totalPrice]
-#               # items: params[:items],
-#               # friends: params[:friends],
-#               # groups: params[:groups]
-#               )
-#             else
-#               {status: 'order not found'}
-#             end
-#           end
-#         end
-#       }
-#     end
-#   end
-# end
+            end
+            post do
+              user = User.find(params[:user_id])
+              user.orders.find_or_create_by!({
+               name:params[:name],
+               restaurantName:params[:restaurantName],
+               menuImage:params[:menuImage],
+               status:params[:status]
+                
+              })
+            end
+
+             desc 'Update Order.'
+
+           params do
+                requires :id, type: String
+               requires :name, type: String
+               requires :restaurantName, type: String
+               requires :menuImage, type: String
+               requires :status, type: String
+          end
+          post ':id' do
+            user = User.find(params[:user_id])
+            user.orders.find(params[:id]).update!({
+               name:params[:name],
+               restaurantName:params[:restaurantName],
+               menuImage:params[:menuImage],
+               status:params[:status]
+            
+            
+            })
+          end
+
+           desc 'Delete Order.'
+
+           params do
+            requires :id, type: String
+          end
+          get ':id' do
+            user = User.find(params[:user_id])
+            user.orders.find(params[:id]).destroy
+          end
+
+        end
+      end
+    end
+  end
+end
+
 
 # # Order Class / Collection
 # # @name
