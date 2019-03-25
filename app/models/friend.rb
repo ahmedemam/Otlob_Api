@@ -13,8 +13,9 @@ class Friend
     
     # tags and comments will be stored inside the
     # Post document
-    
+    field :email, type: String
     embeds_many :users
+    
     # embedded_in :user
 
   
