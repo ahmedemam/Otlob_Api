@@ -1,44 +1,19 @@
+require_relative 'boot'
 
+require 'rails/all'
 
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
 
+module YalaNotlob
+  class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.2
 
-
-
-# application.rb
-require 'grape'
-require 'mongoid'
-
-Mongoid.load! "config/mongoid.yml"
-# Load files from the models and api folders
-Dir["#{File.dirname(__FILE__)}/app/models/**/*.rb"].each { |f| require f }
-Dir["#{File.dirname(__FILE__)}/app/api/**/*.rb"].each { |f| require f }
- Dir["/media/ahmedelshall/Data1/ITI/26-Ruby/Project/Otlob_Api/app/api/v1/*.rb"].each { |f| require f }
- Dir["/media/ahmedelshall/Data1/ITI/26-Ruby/Project/Otlob_Api/app/models/**/*.rb"].each { |f| require f }
-# Grape API class. We will inherit from it in our future controllers.
-module API
-  class Root < Grape::API
-    format :json
-    prefix :api
-
-    # Simple endpoint to get the current status of our API.
-    get :status do
-      { status: 'ok' }
-    end
-     mount V1::Users
-     mount V1::Friends
-    mount V1::Groups
-   mount V1::Orders
-
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
   end
 end
-
-# Mounting the Grape application
-Otlob = Rack::Builder.new {
-
-  map "/" do
-    run API::Root
-  end
-
-}
-
-
