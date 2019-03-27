@@ -76,77 +76,86 @@ module API
           end
 
 
-          desc 'Create a friend.'
+          desc 'Create a friend on order.'
           namespace 'friends/:friend_id' do
           post ':id' do
  
             user = User.find(params[:user_id])
             myorder=user.orders.find(params[:id])
+            
             # myorder.friends.find_or_create_by!(params[:friend_id])
    
-           myorder.update(items:[params[:friend_id]]);
-       #  Order.update_attributes({"member"})
-         # begin
-           
-         #  orderF= orderr.friends.create_with(email:fr['email']).find_or_create_by(email:fr['email'])
+           myorder.update(members:[params[:friend_id]]);
+    
+end
+
+delete ':id' do
+ 
+  user = User.find(params[:user_id])
+  myorder=user.orders.find(params[:id])
+  # fr=myorder.friends.find(members:[params[:friend_id]])
+  #myorder["members"]
+  # myorder.friends.find_or_create_by!(params[:friend_id])
+
+#  myorder.update(members:[params[:friend_id]]);
+myorder.update(
+
+  { },
+  { $pull: {members: { index:params[:friend_id] } } },
+  { multi: true }
+)
+end
 
 
-#   User.create_with(last_name: 'Johansson').find_or_create_by(first_name: 'Scarlett')
- 
-#   fr= User.find_by(email:params[:email])
-# orderr=  fr.orders.create_with(name:params[:name]).find_or_create_by(name:order['name'])
-   
- 
-# rescue Exception => e
+
+
+desc 'Get one order'
   
-#     { status: 'friend email dont exist' }
+get ':id' do
+ user = User.find(params[:user_id])
+ myorder=user.orders.find(params[:id])
+ myorder["members"]
+
+end
+end
+
+# desc 'Create a group.'
+# namespace 'groups/:group_id' do
+# post ':id' do
+
+#   user = User.find(params[:user_id])
+#   myorder=user.orders.find(params[:id])
+ 
+
+#  myorder.update(items:[params[:group_id]]);
+
 # end
-end
-end
+# desc 'return a group.'
 
- desc 'Create a group.'
-          namespace 'groups/:group_id' do
-          post ':id' do
- 
-            user = User.find(params[:user_id])
-            myorder=user.orders.find(params[:id])
-           
-   
-           myorder.update(items:[params[:group_id]]);
+# get ':id' do
 
-end
- desc 'return a group.'
-         
-          get ':id' do
- 
-            user = User.find(params[:user_id])
-            myorder=user.orders.find(params[:id])
-            myorder["members"]
-          
+#   user = User.find(params[:user_id])
+#   myorder=user.orders.find(params[:id])
+#   myorder["members"]
 
-end
 
- desc 'delete a group.'
-         
-          delete ':id' do
- 
-            user = User.find(params[:user_id])
-            myorder=user.orders.find(params[:id]);
-           myorder.find(params[:group_id]).destroy
+# end
 
-end
+# desc 'delete a group.'
+
+# delete ':id' do
+
+#   user = User.find(params[:user_id])
+#   myorder=user.orders.find(params[:id]);
+#  myorder.find(params[:group_id]).destroy
+
+# end
 
 
 
 
 
-end
-
-
-
-
-
-
+# end
 
 
 
@@ -195,3 +204,7 @@ end
 # # post:   /users/:id/orders/:id/items     - add item
 # # delete  /users/:id/orders/:id/items     - delete item
 # # put     /users/:id/orders/:id/items     - update item
+
+
+
+

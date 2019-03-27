@@ -8,7 +8,7 @@ module API
         namespace 'users/:user_id' do
           resources :friends do
   
-            desc 'Create a comment.'
+            desc 'Create a friend.'
             params do
               requires :email, type: String
              
@@ -26,8 +26,9 @@ module API
                 
               
             rescue Exception => e
-               
+              
                 { status: 'friend email dont exist' }
+                #fr2=  user.friends.create_with(email:params[:email]).find_or_create_by(email:fr['email'])
              
             end
         end
