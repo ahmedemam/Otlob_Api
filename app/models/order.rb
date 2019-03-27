@@ -10,7 +10,7 @@ class Order
   field :date, type: DateTime, default: Time.now
   field :totalPrice, type: Integer, default: 0
   #
-  field :items, type: Array
+  embeds_many :items
   embeds_many :friends
   embeds_many :groups 
   embedded_in :user
