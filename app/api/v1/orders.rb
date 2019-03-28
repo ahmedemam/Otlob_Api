@@ -64,7 +64,30 @@ module API
             
             })
           end
+###############
+desc 'Update Order status.'
 
+params do
+     
+    requires :status, type: String
+end
+put 'status/:id' do
+ user = User.find(params[:user_id])
+ myorder=user.orders.find(params[:id]);
+ name=myorder["name"];
+ restaurantName=myorder["restaurantName"];
+ menuImage=myorder["menuImage"];
+
+ user.orders.find(params[:id]).update!({
+    name:name,
+    restaurantName:restaurantName,
+    menuImage:menuImage,
+    status:params[:status]
+ 
+ 
+ })
+end
+###############
            desc 'Delete Order.'
 
            params do
@@ -85,25 +108,18 @@ module API
             
             # myorder.friends.find_or_create_by!(params[:friend_id])
    
-           myorder.update(members:[params[:friend_id]]);
-    
+           #myorder.update(members:[params[:friend_id]])
+          #  myorder.push(members:[params[:friend_id]]);
+          myorder.add_to_set(members:[params[:friend_id]]);
+          
 end
 
 delete ':id' do
  
   user = User.find(params[:user_id])
   myorder=user.orders.find(params[:id])
-  # fr=myorder.friends.find(members:[params[:friend_id]])
-  #myorder["members"]
-  # myorder.friends.find_or_create_by!(params[:friend_id])
-
-#  myorder.update(members:[params[:friend_id]]);
-myorder.update(
-
-  { },
-  { $pull: {members: { index:params[:friend_id] } } },
-  { multi: true }
-)
+  myorder.pull(members:params[:friend_id])
+  
 end
 
 
@@ -119,17 +135,55 @@ get ':id' do
 end
 end
 
-# desc 'Create a group.'
-# namespace 'groups/:group_id' do
-# post ':id' do
+desc 'Create a group.'
+namespace 'groups/:group_id' do
+post ':id' do
 
-#   user = User.find(params[:user_id])
-#   myorder=user.orders.find(params[:id])
+  user = User.find(params[:user_id])
+  myorder=user.orders.find(params[:id])
+  
+myorder.add_to_set(membergroup:[params[:group_id]]);
  
 
 #  myorder.update(items:[params[:group_id]]);
+end
 
-# end
+
+delete ':id' do
+ 
+  user = User.find(params[:user_id])
+  myorder=user.orders.find(params[:id])
+  myorder.pull(membergroup:params[:group_id])
+  
+end
+
+desc 'return a group in order.'
+
+get ':id' do
+
+  user = User.find(params[:user_id])
+  myorder=user.orders.find(params[:id])
+    g=user.groups.find(params[:group_id])
+  
+
+end
+
+end
+ desc 'return all order groups.'
+ namespace 'groups' do
+get ':id' do
+
+  user = User.find(params[:user_id])
+  myorder=user.orders.find(params[:id])
+  groupsOrder=[];
+  myorder["membergroup"].each do |groupid|
+  g=user.groups.find(groupid)
+  groupsOrder.push(g)
+end
+groupsOrder
+
+end
+end
 # desc 'return a group.'
 
 # get ':id' do
@@ -155,7 +209,6 @@ end
 
 
 
-# end
 
 
 

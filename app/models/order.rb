@@ -13,6 +13,7 @@ class Order
   #
   embeds_many :items
   field :members, type: Array
+  field :membergroup, type: Array
   embeds_many :friends
   embeds_many :groups 
   embedded_in :user

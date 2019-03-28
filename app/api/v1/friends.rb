@@ -58,10 +58,8 @@ module API
             #   })
             # end
   
-            desc 'Delete a comment.'
-            params do
-              requires :id, type: String, desc: 'Status ID.'
-            end
+            desc 'Delete a friend.'
+           
             delete ':id' do
               user = User.find(params[:user_id])
               user.friends.find(params[:id]).destroy
