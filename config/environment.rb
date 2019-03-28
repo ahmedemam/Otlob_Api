@@ -1,5 +1,3 @@
-# Load the Rails application.
-require_relative 'application'
+ENV['RACK_ENV'] ||= 'development'
 
-# Initialize the Rails application.
-Rails.application.initialize!
+require File.expand_path('../application', __FILE__)

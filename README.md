@@ -1,24 +1,33 @@
-# README
+# Grape Bootstrap
+Grape bootstrap with Rack and Mongodb
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![Build Status](https://travis-ci.org/thiagogsr/grape-bootstrap.svg?branch=master)](https://travis-ci.org/thiagogsr/grape-bootstrap)
+[![Code Climate](https://codeclimate.com/github/thiagogsr/grape-bootstrap/badges/gpa.svg)](https://codeclimate.com/github/thiagogsr/grape-bootstrap)
+[![Test Coverage](https://codeclimate.com/github/thiagogsr/grape-bootstrap/badges/coverage.svg)](https://codeclimate.com/github/thiagogsr/grape-bootstrap/coverage)
 
-Things you may want to cover:
+## Instalation
 
-* Ruby version
+* Clone project
+* Run `bundle install`
+* Copy `config/mongoid.yml.sample` to `config/mongoid.yml`
+* Run `rackup`
 
-* System dependencies
+## Specs
 
-* Configuration
+* Run `[bundle exec] rspec`
 
-* Database creation
+## Routes
 
-* Database initialization
+* Run `[bundle exec] rake routes`
 
-* How to run the test suite
+## Database
 
-* Services (job queues, cache servers, search engines, etc.)
+* [Mongodb](https://www.mongodb.org/) using [Mongoid](http://mongoid.org/)
 
-* Deployment instructions
+## API
 
-* ...
+* [Grape](https://github.com/intridea/grape)
+
+## Contribute
+
+You are welcome :)
