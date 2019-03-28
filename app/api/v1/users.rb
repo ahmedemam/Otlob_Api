@@ -1,6 +1,24 @@
 # app/api/v1/posts.rb
+require 'grape'
+require 'omniauth'
+require 'omniauth-facebook'
+
 module API
     module V1
+
+class Auth < Grape::API
+  include OmniAuth::Strategy
+
+  format :json
+  {status:"sss"}
+  use Rack::Session::Cookie
+  use OmniAuth::Strategies::Facebook, '595117117671783', '9b2cd65983a4b556131992c4bf068ee7'
+  redirect '/auth'
+end
+
+# run your base api here. Root, Base, whatever you called it.
+
+
       class Users < Grape::API
         version 'v1', using: :path, vendor: 'otlob'
   
@@ -10,6 +28,39 @@ module API
           get do
             User.all.ordered
           end
+
+
+
+ desc 'Get User Data From Facebook'
+          get '/auth/facebook/callback' do
+             # {status:request.env['omniauth.auth']}
+
+            
+
+      {status:Request.env['omniauth.auth']}
+      # {status:request.env["action_dispatch.request.unsigned_session_cookie"]}
+      # {status:request.env['omniauth.origin']}
+
+
+    #         @user = User.find_or_create_from_auth_hash(request.env["omniauth.auth"])
+    # session[:user_id] = @user.id
+    # {'status:ok'}
+    # redirect_to :me
+
+           # redirect "../../../auth/facebook/callback"
+          end
+
+          #  desc 'Get User Data From Gmail'
+          # get '/auth/google_oauth2' do
+          #  redirect "../../../auth/google_oauth2/callback"
+          # end
+
+          
+          # get '/auth/:provider/callback' do
+          #  redirect "sessions#create"
+          # end
+
+
           ##########################          
           desc "Return a specific User"
           params do
@@ -27,7 +78,7 @@ module API
             requires :email, type: String
             requires :password, type: String
           end
-          post "/login" do
+          post "/ll" do
             begin
               user = User.find_by(email:params[:email], 
                 password: params[:password])

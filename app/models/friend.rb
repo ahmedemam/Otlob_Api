@@ -14,14 +14,11 @@ class Friend
     # tags and comments will be stored inside the
     # Post document
     field :email, type: String
-    field :friend_id, type: String
     embeds_many :users
-    #embedded_in:user
-    embeds_many :orders
-    #  embeds_many:groups
-     embedded_in :item
+    
+    # embedded_in :user
 
-    #has_and_belongs_to_many:groups
+  
     # Sort the posts
     scope :ordered, -> { order('created_at DESC') }
   

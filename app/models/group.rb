@@ -4,11 +4,8 @@ class Group
     include Mongoid::Timestamps
     field :name, type: String
     #  field :members, type: Array
-    embeds_many :users
-     embedded_in :orders
-      # embeds_many :friends
-      embedded_in:friend
-    #  has_and_belongs_to_many:friends
+   
+     embedded_in :user
     # Sort the posts
     scope :ordered, -> { order('created_at DESC') }
     # Validates that the slug is present and unique

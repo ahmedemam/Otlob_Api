@@ -64,30 +64,7 @@ module API
             
             })
           end
-###############
-desc 'Update Order status.'
 
-params do
-     
-    requires :status, type: String
-end
-put 'status/:id' do
- user = User.find(params[:user_id])
- myorder=user.orders.find(params[:id]);
- name=myorder["name"];
- restaurantName=myorder["restaurantName"];
- menuImage=myorder["menuImage"];
-
- user.orders.find(params[:id]).update!({
-    name:name,
-    restaurantName:restaurantName,
-    menuImage:menuImage,
-    status:params[:status]
- 
- 
- })
-end
-###############
            desc 'Delete Order.'
 
            params do
@@ -99,111 +76,72 @@ end
           end
 
 
-          desc 'Create a friend on order.'
+          desc 'Create a friend.'
           namespace 'friends/:friend_id' do
           post ':id' do
  
             user = User.find(params[:user_id])
             myorder=user.orders.find(params[:id])
-            
             # myorder.friends.find_or_create_by!(params[:friend_id])
    
-           #myorder.update(members:[params[:friend_id]])
-          #  myorder.push(members:[params[:friend_id]]);
-          myorder.add_to_set(members:[params[:friend_id]]);
+           myorder.update(items:[params[:friend_id]]);
+       #  Order.update_attributes({"member"})
+         # begin
+           
+         #  orderF= orderr.friends.create_with(email:fr['email']).find_or_create_by(email:fr['email'])
+
+
+#   User.create_with(last_name: 'Johansson').find_or_create_by(first_name: 'Scarlett')
+ 
+#   fr= User.find_by(email:params[:email])
+# orderr=  fr.orders.create_with(name:params[:name]).find_or_create_by(name:order['name'])
+   
+ 
+# rescue Exception => e
+  
+#     { status: 'friend email dont exist' }
+# end
+end
+end
+
+ desc 'Create a group.'
+          namespace 'groups/:group_id' do
+          post ':id' do
+ 
+            user = User.find(params[:user_id])
+            myorder=user.orders.find(params[:id])
+           
+   
+           myorder.update(items:[params[:group_id]]);
+
+end
+ desc 'return a group.'
+         
+          get ':id' do
+ 
+            user = User.find(params[:user_id])
+            myorder=user.orders.find(params[:id])
+            myorder["members"]
           
+
 end
 
-delete ':id' do
+ desc 'delete a group.'
+         
+          delete ':id' do
  
-  user = User.find(params[:user_id])
-  myorder=user.orders.find(params[:id])
-  myorder.pull(members:params[:friend_id])
-  
-end
-
-
-
-
-desc 'Get one order'
-  
-get ':id' do
- user = User.find(params[:user_id])
- myorder=user.orders.find(params[:id])
- myorder["members"]
-
-end
-end
-
-desc 'Create a group.'
-namespace 'groups/:group_id' do
-post ':id' do
-
-  user = User.find(params[:user_id])
-  myorder=user.orders.find(params[:id])
-  
-myorder.add_to_set(membergroup:[params[:group_id]]);
- 
-
-#  myorder.update(items:[params[:group_id]]);
-end
-
-
-delete ':id' do
- 
-  user = User.find(params[:user_id])
-  myorder=user.orders.find(params[:id])
-  myorder.pull(membergroup:params[:group_id])
-  
-end
-
-desc 'return a group in order.'
-
-get ':id' do
-
-  user = User.find(params[:user_id])
-  myorder=user.orders.find(params[:id])
-    g=user.groups.find(params[:group_id])
-  
+            user = User.find(params[:user_id])
+            myorder=user.orders.find(params[:id]);
+           myorder.find(params[:group_id]).destroy
 
 end
 
-end
- desc 'return all order groups.'
- namespace 'groups' do
-get ':id' do
 
-  user = User.find(params[:user_id])
-  myorder=user.orders.find(params[:id])
-  groupsOrder=[];
-  myorder["membergroup"].each do |groupid|
-  g=user.groups.find(groupid)
-  groupsOrder.push(g)
-end
-groupsOrder
+
+
 
 end
-end
-# desc 'return a group.'
 
-# get ':id' do
-
-#   user = User.find(params[:user_id])
-#   myorder=user.orders.find(params[:id])
-#   myorder["members"]
-
-
-# end
-
-# desc 'delete a group.'
-
-# delete ':id' do
-
-#   user = User.find(params[:user_id])
-#   myorder=user.orders.find(params[:id]);
-#  myorder.find(params[:group_id]).destroy
-
-# end
 
 
 
@@ -257,7 +195,3 @@ end
 # # post:   /users/:id/orders/:id/items     - add item
 # # delete  /users/:id/orders/:id/items     - delete item
 # # put     /users/:id/orders/:id/items     - update item
-
-
-
-
