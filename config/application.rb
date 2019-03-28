@@ -1,14 +1,23 @@
-# application.rb
-require 'grape'
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'api'))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'app'))
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
+require 'boot'
 require 'mongoid'
 
-Mongoid.load! "config/mongoid.yml"
-# Load files from the models and api folders
-Dir["#{File.dirname(__FILE__)}/app/models/**/*.rb"].each { |f| require f }
-Dir["#{File.dirname(__FILE__)}/app/api/**/*.rb"].each { |f| require f }
- Dir["/home/silk/Desktop/aaaaaaaa/ahmed/Otlob_Api/app/api/v1/*.rb"].each { |f| require f }
- Dir["/home/silk/Desktop/aaaaaaaa/ahmed/Otlob_Api/app/models/**/*.rb"].each { |f| require f }
-# Grape API class. We will inherit from it in our future controllers.
+Bundler.require :default, ENV['RACK_ENV']
+Mongoid.load!(File.expand_path('mongoid.yml', './config'))
+
+Dir[File.expand_path('../../api/*.rb', __FILE__)].each do |f|
+  require f
+end
+
+Dir[File.expand_path('../../app/models/*.rb', __FILE__)].each do |f|
+  require f
+end
+
+require 'api'
+
 module API
   class Root < Grape::API
     format :json
@@ -23,16 +32,20 @@ module API
      mount V1::Groups
      mount V1::Orders
 
-  end
-end
+require_relative 'boot'
 
-# Mounting the Grape application
-Otlob = Rack::Builder.new {
+require 'rails/all'
 
-  map "/" do
-    run API::Root
-  end
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
 
-}
+module YalaNotlob
+  class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.2
 
-
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.

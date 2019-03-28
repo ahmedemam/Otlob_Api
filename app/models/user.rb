@@ -1,3 +1,4 @@
+
 class User 
   # We define this class as a Mongoid Document
   include Mongoid::Document
