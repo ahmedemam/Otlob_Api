@@ -13,6 +13,7 @@ class User
   embeds_many :friends
   embeds_many :groups
   embeds_many :orders
+  
   # Sort the posts
   scope :ordered, -> {order('created_at DESC')}
   # Validates that the slug is present and unique

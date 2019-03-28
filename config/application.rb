@@ -24,10 +24,12 @@ module API
     get :status do
       { status: 'ok' }
     end
+     mount V1::Items
      mount V1::Users
      mount V1::Friends
      mount V1::Groups
      mount V1::Orders
+     #mount V1::Items
 
   end
 end

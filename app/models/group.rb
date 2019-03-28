@@ -5,7 +5,7 @@ class Group
     field :name, type: String
     #  field :members, type: Array
     embeds_many :users
-    # embedded_in :user
+     embedded_in :orders
       # embeds_many :friends
       embedded_in:friend
     #  has_and_belongs_to_many:friends

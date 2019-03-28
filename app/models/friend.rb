@@ -19,7 +19,7 @@ class Friend
     #embedded_in:user
     embeds_many :orders
     #  embeds_many:groups
-     #embedded_in :user
+     embedded_in :item
 
     #has_and_belongs_to_many:groups
     # Sort the posts
