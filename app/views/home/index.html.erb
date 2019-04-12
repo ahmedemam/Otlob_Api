@@ -1,0 +1,17 @@
+
+<button id="sendInvite" >Invite</button>
+<script>
+$(document).ready(function(){
+  
+    App.notifications.received = function(data)
+    {
+        alert(data['message'])
+    }
+
+
+    $("#sendInvite").click(function(){
+        msg = 'Islam'
+        App.notifications.send_notifications(msg)
+    })
+})
+</script>

@@ -1,24 +1,6 @@
-require 'rubygems'
-require 'bundler'
+# Add your own tasks in files placed in lib/tasks ending in .rake,
+# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-begin
-  Bundler.setup(:default, :development)
-rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts 'Run `bundle install` to install missing gems'
-  exit e.status_code
-end
+require_relative 'config/application'
 
-task :environment do
-  ENV['RACK_ENV'] ||= 'development'
-  require File.expand_path('../config/environment', __FILE__)
-end
-
-desc "API Routes"
-task routes: :environment do
-  GrapeBootstrap::API.routes.each do |api|
-    method = api.request_method.ljust(10)
-    path   = api.path
-    puts "     #{method} #{path}"
-  end
-end
+Rails.application.load_tasks
