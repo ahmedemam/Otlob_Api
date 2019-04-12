@@ -30,4 +30,3 @@ App.notifications.received = (data)=>{
     document.getElementById("allNotifications").appendChild(newItem);
 }
 
-

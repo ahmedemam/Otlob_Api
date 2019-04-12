@@ -2,10 +2,7 @@
 <button id="sendInvite" >Invite</button>
 <script>
 $(document).ready(function(){
-  
-
     $("#sendInvite").click(function(){
-          
         App.notifications.send_notifications("islam@gmail.com,  is invited you to join his order from , Mac ")
         console.log("notification sent")
     })
