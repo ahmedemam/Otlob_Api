@@ -1,6 +1,7 @@
 class NotificationsChannel < ApplicationCable::Channel
   def subscribed
-     stream_from "some_channel"
+
+     stream_from current_user.email
   end
 
   def unsubscribed
@@ -8,6 +9,7 @@ class NotificationsChannel < ApplicationCable::Channel
   end
 
   def send_notifications(data)
-    ActionCable.server.broadcast "some_channel" , message:data['message']
-  end
+    @d = data['message'].split(",")
+    ActionCable.server.broadcast @d[0], message:data['message']
+  end 
 end

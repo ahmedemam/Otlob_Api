@@ -14,3 +14,19 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+App.notifications.received = (data)=>{
+    console.log("notification received 2")
+    var textnode = document.createTextNode(data['message']);
+    var name = data['message'].split(",")[1];
+    document.getElementById("allNotifications").appendChild(textnode);
+    var a = document.createElement("a");
+    var newItem = document.createElement("li");
+    a.textContent = "accept invitation";
+    a.setAttribute('href', `/joinedOrder/${name}`);
+     
+    newItem.appendChild(a);
+    alert(a);
+    document.getElementById("allNotifications").appendChild(newItem);
+}
+
